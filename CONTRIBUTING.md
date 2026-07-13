@@ -15,6 +15,7 @@ directly to what the template parser reads:
 | `context/additional_context/*.md` | Extra context, referenced from `instructions.md` by relative path (`additional_context/<file>`) | No |
 | `.mcp.json` → `mcpServers` | MCP tool servers (command + args only) | No |
 | `skills/<name>/` | A skill (the whole folder is copied) | No |
+| `tasks/*.md` | Recurring scheduled tasks, created paused | No |
 | `README.md` | Human docs for the template | Recommended |
 
 The presence of `context/instructions.md` is what marks a folder as a template.
@@ -36,6 +37,7 @@ Templates are public. Never commit API keys, tokens, or any credential.
 
 - `.mcp.json` carries `command` and `args` only. Do not add an `env` block with
   real keys.
+- Task scripts may call external services, but must not contain credentials.
 - Credentials are injected at request time by the OneCLI gateway, not baked into
   the template. If your template needs a service connected, document how to get
   the key and which scopes it needs in the template's own `README.md` (see
@@ -47,9 +49,10 @@ Templates are public. Never commit API keys, tokens, or any credential.
 2. Create your template at `<category>/<template>/`.
 3. Write `context/instructions.md`, the only required file.
 4. Add what the agent needs: `.mcp.json` (no secrets), any `skills/<name>/`
-   folders, and a per-template `README.md` covering what it does and which MCP
-   servers and credentials it expects. The provider is not set in the template;
-   it is chosen on the agent later.
+   folders, optional recurring tasks under `tasks/*.md`, and a per-template
+   `README.md` covering what it does and which MCP servers and credentials it
+   expects. The provider is not set in the template; it is chosen on the agent
+   later.
 5. Test it end to end. `--template` resolves relative to your NanoClaw install's
    templates directory, not your clone, so do one of:
    ```bash
@@ -60,14 +63,21 @@ Templates are public. Never commit API keys, tokens, or any credential.
    cp -R <category>/<template> <nanoclaw>/templates/<category>/<template>
    ncl groups create --template <category>/<template> --name "Test"
    ```
+   If the template defines tasks, confirm they appear paused with
+   `ncl tasks list --status paused`. For a scripted task, also run it once
+   with `ncl tasks run <task-id>` and inspect it with
+   `ncl tasks get <task-id>`.
 6. Re-check the diff for any secret before you commit.
-7. Open a PR describing what the template does and which MCP servers it expects.
+7. Open a PR describing what the template does, including any predefined tasks
+   and MCP servers it expects.
 
 ## PR checklist
 
 - [ ] Template lives under an appropriate `<category>/<template>/`.
 - [ ] `context/instructions.md` is present.
 - [ ] `.mcp.json` has no secrets (command and args only).
+- [ ] Every `tasks/*.md` file has a nonempty `schedule`, an optional nonempty
+      `script`, no other frontmatter fields, and a prompt body.
 - [ ] A per-template `README.md` explains the template and its credentials.
 - [ ] Stamped and tested locally with a bare ref (via `NANOCLAW_TEMPLATES_DIR`
       or a copy into `templates/`).

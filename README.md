@@ -4,10 +4,10 @@ Prebuilt agent templates for [NanoClaw](https://github.com/nanocoai/nanoclaw),
 an AI assistant that runs agents securely in their own containers.
 
 A **template** is a folder you can stamp into a working NanoClaw agent. It
-carries the agent's standing instructions, its MCP tool servers, and its skills,
-but **no secrets and no provider**. Templates are provider-neutral; you pick the
-runtime separately, so one template works on any provider. Point `ncl` at one and
-you get a configured agent group in seconds.
+carries the agent's standing instructions, its MCP tool servers, its skills, and
+optional recurring tasks, but **no secrets and no provider**. Templates are
+provider-neutral; you pick the runtime separately, so one template works on any
+provider. Point `ncl` at one and you get a configured agent group in seconds.
 
 > New to NanoClaw? Start at the [main repo](https://github.com/nanocoai/nanoclaw)
 > or [docs.nanoclaw.dev](https://docs.nanoclaw.dev).
@@ -73,6 +73,7 @@ defaults sensibly.
 ├── .mcp.json             # optional: MCP servers (command/args/env), NO secrets
 ├── skills/
 │   └── <name>/           # optional: one folder per skill (SKILL.md + any references/)
+├── tasks/*.md            # optional: recurring tasks, created paused
 └── README.md             # recommended: docs for this template
 ```
 
@@ -82,6 +83,7 @@ defaults sensibly.
 | `context/additional_context/*.md` | Extra context, referenced from `instructions.md` by relative path (`additional_context/<file>`) | No |
 | `.mcp.json` → `mcpServers` | MCP tool servers | No |
 | `skills/<name>/` | A skill (folder copied whole) | No |
+| `tasks/*.md` | Recurring scheduled tasks, created paused pending user activation | No |
 
 Notes for template authors:
 
@@ -100,6 +102,34 @@ Notes for template authors:
 - Each immediate subfolder of `skills/` is **one skill**, named after the folder.
   The entire folder is copied, so place `SKILL.md` and any `references/*.md`
   inside it per the skills convention.
+- Each immediate Markdown file under `tasks/` defines one recurring task. The
+  filename becomes the task name, `schedule` is a cron expression, an optional
+  `script` can decide whether to wake the agent, and the body is the prompt:
+
+  ```markdown
+  ---
+  schedule: "*/15 * * * *"
+  script: |
+    if [ -f /workspace/agent/wake-next-task ]; then
+      echo '{"wakeAgent": true}'
+    else
+      echo '{"wakeAgent": false}'
+    fi
+  ---
+
+  Handle the condition reported by the script.
+  ```
+
+  `schedule` is required. `script` is optional and may be a single-line or
+  multiline YAML string. No other frontmatter fields are accepted. Scripts use
+  NanoClaw's normal scheduled-task behavior; see
+  [Scheduled Tasks](https://github.com/nanocoai/nanoclaw/blob/main/docs/scheduled-tasks.md#script-gates)
+  for the contract, testing workflow, limits, and failure behavior.
+
+  Tasks are validated when the template is stamped, use the NanoClaw install
+  timezone, and start paused. List them with
+  `ncl tasks list --group <agent-group-id> --status paused` and enable one with
+  `ncl tasks resume <task-id>`.
 - **Never commit secrets.** `.mcp.json` carries `command` + `args` only.
   Credentials are injected at request time by the OneCLI gateway. See a
   template's own README (e.g. [`sales/sdr/README.md`](sales/sdr/README.md)) for
