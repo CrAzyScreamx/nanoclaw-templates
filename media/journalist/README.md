@@ -53,6 +53,8 @@ ncl tasks list --group <agent-group-id> --status paused
 ncl tasks resume <task-id>
 ```
 
+Or just ask the agent to activate it.
+
 Requires a NanoClaw build with template scheduled tasks; on older builds the
 `tasks/` folder is ignored and you can ask for a digest on demand ("what's
 new on my beat?").
@@ -92,8 +94,7 @@ check the run cost in the Apify console, then decide your schedule.
 ## Email is optional (and not part of this template)
 
 Inbox pitch triage and past-contact search need your mailbox, which a
-template cannot ship: connect Gmail (or another provider) yourself through
-OneCLI and add a mail MCP server to the agent if you want inbox access.
+template cannot ship: connect Gmail (or another provider) yourself through OneCLI.
 Without it, pitch triage still works on anything you paste or forward into
 the chat; the scoring rubric is the same.
 

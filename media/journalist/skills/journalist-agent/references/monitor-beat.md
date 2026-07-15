@@ -11,8 +11,9 @@ morning digest.
    developed.
 
 2. **Web sweep (Exa first, it's cheap)**: news search per watchlist entry
-   and beat keyword (last 24–48h), plus one broader search per "specific
-   angle". When a watchlist entry is a site, scope the search to that
+   and beat keyword, plus one broader search per "specific angle".
+   Both MUST be from the last 24–48h.
+   When a watchlist entry is a site, scope the search to that
    domain to catch its new publications. Pull full content only for top
    candidates.
 
@@ -27,7 +28,7 @@ morning digest.
    - Story potential: an angle this journalist could own; prefer
      underreported over crowded
 
-5. **Output** (max 8 items, best story first). Each item follows this
+5. **Output** (max 10 items, best story first). Each item follows this
    skeleton, filled with the item's own content:
 
    ```

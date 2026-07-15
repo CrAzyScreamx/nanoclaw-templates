@@ -33,11 +33,21 @@ profile improves with every session.
    share at all, note "neutral news style for now" and ask again when
    drafting comes up.
 
+3. **Anything else**: close by asking, briefly and openly, whether they
+   have other preferences for how you should work: digest length or
+   timing, how they like updates delivered, do's and don'ts, pet peeves.
+   Save whatever comes up; skip gracefully if nothing does.
+
 ## Persist
 
-Write `/workspace/agent/beat-profile.md` with everything from step 1, plus
-a pointer to the style samples. Close the chat by saying what you can do
+Write `/workspace/agent/beat-profile.md` with everything from steps 1 and
+3, plus a pointer to the style samples. Close the chat by saying what you can do
 next: a morning digest, a pitch pass, or help on a story already in flight.
+
+One more thing while closing: the scheduled morning-digest task is created
+**paused**, so no digest will arrive on its own yet. Check whether it is
+active; if it is paused or you cannot check, tell the journalist and offer
+to activate it.
 
 Keep the profile alive afterwards: whenever the user's reactions teach you
 something (an overruled verdict, "more of this, less of that"), update it.
