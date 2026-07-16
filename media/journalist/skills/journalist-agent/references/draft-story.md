@@ -3,6 +3,10 @@
 Turn interview material and research into a draft the journalist can edit,
 plus the pitch that sells it to an editor.
 
+Run this play ONLY when the journalist EXPLICITLY ASKS for a draft or an
+editor pitch. Never offer to write, and never draft unprompted; until
+asked, your job ends at research, sources, and prep.
+
 ## Editor pitch (often wanted before the draft)
 
 One tight block: working headline + dek, a 3-sentence pitch (what's new, why
@@ -13,9 +17,12 @@ unconfirmed.
 
 1. **Load**: the story folder (`/workspace/agent/stories/<slug>/`), the
    beat profile, and the writing samples in `/workspace/agent/style/`.
-   Match the samples' voice; if there are no samples yet, ask for 2–3
-   published pieces (see `references/onboard-journalist.md`) or use neutral
-   news style and say so.
+   Match the samples' voice. If there are no samples yet, ask for 2–3
+   published pieces (links or pasted text; fetch links with Exa and save
+   each to `style/<slug>.md` with a note on what marks their style), and
+   ask whether drafts should sound like the published versions or their
+   own raw writing, since published pieces carry an editor's hand too. If
+   nothing is handy, use neutral news style and say so.
 
 2. **Pull quotes word-for-word.** Copy each quote from the notes or
    transcript exactly as the person said it. You may drop filler ("um",

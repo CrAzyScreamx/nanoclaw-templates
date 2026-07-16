@@ -1,10 +1,9 @@
 # Journalist Agent Template
 
 A NanoClaw agent template for working journalists: monitor a beat, deliver a
-morning digest, triage story pitches, find expert sources, prep interviews,
-and draft stories from interview material. It researches and drafts, with
-strict sourcing rules and no fabrication, while the journalist verifies,
-sends, and publishes.
+morning digest, triage story pitches, find expert sources, and prep
+interviews. It does the research, with strict sourcing rules and no
+fabrication; the journalist writes, verifies, and publishes.
 
 ## Layout
 
@@ -17,12 +16,13 @@ journalist/
 │   └── journalist-agent/           # one skill: the reporting workflow (auto-triggers on newsroom tasks)
 │       ├── SKILL.md                #   entry: operating logic + routing to the plays below
 │       └── references/
-│           ├── onboard-journalist.md   #   learn the beat + writing voice
+│           ├── onboard-journalist.md   #   learn the beat + preferences
 │           ├── monitor-beat.md         #   beat monitoring + morning digest
 │           ├── evaluate-pitches.md     #   score inbound pitches (with tracking ledger)
 │           ├── find-sources.md         #   find + vet experts (grows a source book)
 │           ├── prepare-interview.md    #   one-page prep docs
-│           └── draft-story.md          #   drafts + editor pitches
+│           ├── draft-story.md          #   drafts + editor pitches, on explicit request only
+│           └── credentials.md          #   connecting Exa/Apify keys via OneCLI (read on auth errors)
 ├── tasks/
 │   └── morning-digest.md           # daily 9 AM digest (created PAUSED; see below)
 └── README.md                       # this file
@@ -36,11 +36,10 @@ ncl groups create --template media/journalist --name "Journalist Agent"
 
 Then wire it to a channel as usual (`/manage-channels`). On first use the
 agent gets to know you in a short chat: your beat (topics, angles,
-watchlist, outlet) and your voice (it asks for 2–3 published pieces as
-links or text). It stores both in its workspace; every digest, pitch
-verdict, and draft keys off them. Over time it also builds a pitch ledger
-(so the same inbound pitches are never re-read) and a source book of the
-experts you approve.
+watchlist, outlet) and any working preferences. It stores the profile in
+its workspace; every digest and pitch verdict keys off it. Over time it
+also builds a pitch ledger (so the same inbound pitches are never re-read)
+and a source book of the experts you approve.
 
 ## The morning digest (scheduled task)
 

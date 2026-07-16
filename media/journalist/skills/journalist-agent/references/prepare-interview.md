@@ -32,5 +32,3 @@ Turn a confirmed interview into a one-page prep doc.
    `/workspace/agent/stories/<slug>/interview-prep-<name>.md`:
    brief, questions, verification list, logistics line (when/where/format,
    recording consent reminder).
-
-Next, after the interview → `references/draft-story.md`
