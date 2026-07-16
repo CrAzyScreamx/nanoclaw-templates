@@ -27,8 +27,15 @@ session.
 ## Persist
 
 Write `/workspace/agent/beat-profile.md` with everything from steps 1 and
-2. Close the chat by saying what you can do next: a morning digest, a pitch
-pass, or help on a story already in flight.
+2. Then ask how many pitches are sitting in their inbox right now, and
+offer to sort through them and surface the most interesting ones. The
+pitch pass needs the pitches themselves: a connected mailbox if one
+exists, or a batch pasted or forwarded into the chat.
+
+Offer the morning digest next, or right away if they pass on the pitches
+for now. The digest needs Exa and the X scraper connected; if they are
+not yet, offer to set that up, following `references/credentials.md`.
+Mention you can also help on a story already in flight.
 
 One more thing while closing: the scheduled morning-digest task is created
 **paused**, so no digest will arrive on its own yet. Check whether it is

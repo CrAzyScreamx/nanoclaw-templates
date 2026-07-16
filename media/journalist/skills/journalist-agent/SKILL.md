@@ -78,4 +78,3 @@ failed.
   rationale each.
 - **Source lists** → source cards (who, affiliation, why relevant, past
   statements, public reach path).
-- **Drafts** → the copy first, then the sourcing appendix.
