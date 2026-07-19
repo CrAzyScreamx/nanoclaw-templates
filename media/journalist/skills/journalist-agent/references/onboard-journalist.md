@@ -42,9 +42,9 @@ Write `/workspace/agent/beat-profile.md` with everything from steps 1 to
 
 2. Offer the morning digest next, or right away if they pass on the
    pitches. Before scheduling anything, ask for their city or timezone
-   and save it to the profile; never guess it. The digest needs Exa and
-   the X scraper connected; if they are not yet, offer to set that up,
-   following `references/credentials.md`.
+   and save it to the profile; never guess it. The digest needs the X
+   scraper connected; if it is not yet, offer to set that up, following
+   `references/credentials.md`.
 
 One more thing while closing: the scheduled morning-digest task is created
 **paused**, so no digest will arrive on its own yet. Check whether it is

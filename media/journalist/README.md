@@ -9,7 +9,7 @@ fabrication; the journalist writes, verifies, and publishes.
 
 ```
 journalist/
-├── .mcp.json                       # MCP servers (Apify X scraper, Exa): no secrets
+├── .mcp.json                       # MCP server (Apify X scraper): no secrets
 ├── context/
 │   └── instructions.md             # REQUIRED: the agent's standing brief
 ├── skills/
@@ -22,7 +22,7 @@ journalist/
 │           ├── find-sources.md         #   find + vet experts (grows a source book)
 │           ├── prepare-interview.md    #   one-page prep docs
 │           ├── draft-story.md          #   drafts + editor pitches, on explicit request only
-│           └── credentials.md          #   connecting Exa/Apify keys via OneCLI (read on auth errors)
+│           └── credentials.md          #   connecting the Apify key via OneCLI (read on auth errors)
 ├── tasks/
 │   └── morning-digest.md           # daily 9 AM digest (created PAUSED; see below)
 └── README.md                       # this file
@@ -68,17 +68,15 @@ boundary. `.mcp.json` carries `command` + `args` and never a real key.
 `@apify/actors-mcp-server` needs `APIFY_TOKEN` to be *present* to boot, so
 `.mcp.json` sets it to the dummy value `"placeholder"`. It is not the
 credential: once you connect Apify, the real token is injected automatically
-for `api.apify.com` at request time. Never replace it with a real token. Exa
-needs no placeholder and gets none.
+for `api.apify.com` at request time. Never replace it with a real token.
 
-Register one secret per service in the OneCLI web UI at
+Register the secret in the OneCLI web UI at
 **http://127.0.0.1:10254** (or let the agent hand you a prefilled connect
 link the first time a call fails):
 
 | Service | API host to match | Auth style*             | Where to get the key                              |
 |---------|-------------------|-------------------------|---------------------------------------------------|
 | Apify   | `api.apify.com`   | `Authorization: Bearer` | console.apify.com → Settings → API & Integrations |
-| Exa     | `api.exa.ai`      | `x-api-key` header      | dashboard.exa.ai → API Keys                       |
 
 \* Confirm the exact header against each provider's current API docs when you
 configure the vault entry.
@@ -87,8 +85,8 @@ configure the vault entry.
 
 The X scraper (`apidojo/tweet-scraper`) is **pay-per-result** and requires
 a **paid Apify plan**; it does not run on Apify's free tier. Without one,
-the digest runs on Exa alone (web and news). The skill caps sweeps by
-default (≤5 queries × ≤100 posts per digest run) and prefers Exa for
+the digest runs on web search alone. The skill caps sweeps by default
+(≤5 queries × ≤100 posts per digest run) and prefers plain web search for
 anything the open web can answer. Run one digest, check the run cost in
 the Apify console, then decide your schedule.
 

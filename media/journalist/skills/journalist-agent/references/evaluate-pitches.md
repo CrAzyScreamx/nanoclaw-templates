@@ -33,10 +33,10 @@ it works the same for any source of pitches.
    - Exclusivity: offered first / embargo / already everywhere
    - Specificity: real names, data, and access offered vs. vague claims
 
-4. **Verify the sender** (only for survivors): one Exa lookup. Does the
-   person/company exist, do the claims hold at a glance, any red flags?
+4. **Verify the sender** (only for survivors): one quick web lookup. Does
+   the person/company exist, do the claims hold at a glance, any red flags?
    When the pitch links out to stories or data that bear on the verdict,
-   fetch those pages too (Exa can pull a URL's contents). If a link cannot
+   fetch those pages too. If a link cannot
    be fetched, judge the pitch on its text and say so in the verdict table
    ("link unreachable, judged on text alone") so a good pitch is never
    quietly downgraded over a broken fetch.

@@ -10,9 +10,10 @@ morning digest.
    only new items; a story already surfaced returns only if it materially
    developed.
 
-2. **Web sweep (Exa first, it's cheap)**: news search per watchlist entry
+2. **Web sweep first (it's cheap)**: news search per watchlist entry
    and beat keyword, plus one broader search per "specific angle".
-   Both MUST be from the last 24–48h.
+   Both MUST be from the last 24–48h; anything older is out, no
+   exceptions, and a result with no visible date is treated as old.
    When a watchlist entry is a site, scope the search to that
    domain to catch its new publications. Search the journalist's market
    and language first: favor the outlets the profile lists as their

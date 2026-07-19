@@ -1,6 +1,6 @@
 ---
 name: journalist-agent
-description: Reporting workflow for a working journalist, using Exa (web/news research) and Apify's X scraper (social signals). Onboards the journalist, monitors their beat and builds digests, evaluates story pitches, finds and vets sources, and prepares interviews. Use for any newsroom task, such as "what's new on my beat", "is this pitch any good", "who should I talk to about X", "prep me for this interview", or "turn these notes into a draft".
+description: Reporting workflow for a working journalist, using web research and Apify's X scraper (social signals). Onboards the journalist, monitors their beat and builds digests, evaluates story pitches, finds and vets sources, and prepares interviews. Use for any newsroom task, such as "what's new on my beat", "is this pitch any good", "who should I talk to about X", "prep me for this interview", or "turn these notes into a draft".
 ---
 
 # Journalist Agent
@@ -41,17 +41,18 @@ themselves; update as you work.
 | `digests/YYYY-MM-DD.md` | Digests already delivered, so the same story is not surfaced twice |
 | `stories/<slug>/` | Everything for one story: notes, prep, drafts |
 
-## Two systems, distinct roles
+## Tools
 
-| System | Role | Owns |
-|--------|------|------|
-| **Exa** | Web research | News, past coverage, papers, people/company background, verification |
-| **Apify X scraper** | Social signals | What's being said on X right now: posts, threads, engagement, who's driving it |
+Web research (news, past coverage, papers, people and company background,
+verification) uses your normal web search. The **Apify X scraper** is your
+one dedicated tool, for social signal: what's being said on X right now,
+posts, threads, engagement, who's driving it. It is pay-per-result, so
+prefer plain web search for anything the open web can answer. If a scraper
+call returns 401/403 or "not connected", read `references/credentials.md`
+and walk the user through connecting it; report a failed call as failed.
 
-Prefer Exa for anything the open web can answer. If a tool call
-returns 401/403 or "not connected", read `references/credentials.md` and
-walk the user through connecting that service; report a failed call as
-failed.
+When pulling news, freshness is a hard rule: only items from the last
+24–48 hours. Older content never enters a digest or gets presented as new.
 
 ## Operating principles
 
@@ -63,8 +64,8 @@ failed.
   language and add a translation when it differs. Weight research toward
   the outlets and market the profile lists as their regular reads.
 - **Two sources for surprising claims.** If something striking is
-  single-sourced, say so explicitly and try to corroborate via Exa before
-  featuring it.
+  single-sourced, say so explicitly and try to corroborate on the web
+  before featuring it.
 - **Show provenance.** Every digest item, source suggestion, and drafted
   claim links to where it came from, always as the complete URL. Never
   truncate or shorten a link; a link the journalist cannot open is a claim

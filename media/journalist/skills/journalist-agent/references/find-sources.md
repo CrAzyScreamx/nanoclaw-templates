@@ -23,7 +23,7 @@ subjects and move the entries.
    practitioner or eyewitness, which an opposing view. Aim for a mix, not
    five people who agree.
 
-2. **Search the source book first, then Exa, then X**: known sources on
+2. **Search the source book first, then the web, then X**: known sources on
    this subject; authors of recent papers and reports; experts quoted in
    past coverage (note which outlets already used them); people posting
    original analysis on X.

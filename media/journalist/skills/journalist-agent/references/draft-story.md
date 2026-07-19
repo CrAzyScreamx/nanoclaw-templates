@@ -18,7 +18,7 @@ unconfirmed.
 1. **Load**: the story folder (`/workspace/agent/stories/<slug>/`), the
    beat profile, and the writing samples in `/workspace/agent/style/`.
    Match the samples' voice. If there are no samples yet, ask for 2–3
-   published pieces (links or pasted text; fetch links with Exa and save
+   published pieces (links or pasted text; fetch the links and save
    each to `style/<slug>.md` with a note on what marks their style), and
    ask whether drafts should sound like the published versions or their
    own raw writing, since published pieces carry an editor's hand too. If

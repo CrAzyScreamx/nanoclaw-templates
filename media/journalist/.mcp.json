@@ -9,10 +9,6 @@
         "apidojo/tweet-scraper"
       ],
       "env": { "APIFY_TOKEN": "placeholder" }
-    },
-    "exa": {
-      "command": "npx",
-      "args": ["-y", "exa-mcp-server@3.2.1"]
     }
   }
 }
