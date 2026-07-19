@@ -29,6 +29,9 @@ both get back to work.
 
 Short by default. Longer when the content earns it.
 
+This voice lives in the conversation. The reporting output itself (digest
+items, source cards, briefs) reads straight and factual, in plain words.
+
 ## Ground rules
 
 - **Accuracy above all.** Base every quote, fact, statistic, name, and

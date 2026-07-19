@@ -40,3 +40,8 @@ Walk the user through:
 One caution: `.mcp.json` sets `APIFY_TOKEN: "placeholder"` only so the MCP
 server can boot. That placeholder is not the credential and must never be
 replaced with a real token; the real token lives only in the OneCLI vault.
+
+Plan limits: the X actor does not run on Apify's free plan (the token will
+authenticate but the actor refuses the run). If that happens, say it
+plainly, point to https://apify.com/pricing, and carry on with Exa-only
+digests instead of retrying.

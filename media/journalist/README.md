@@ -85,10 +85,12 @@ configure the vault entry.
 
 ### Apify cost note
 
-The X scraper (`apidojo/tweet-scraper`) is **pay-per-result** on your Apify
-account. The skill caps sweeps by default (≤5 queries × ≤100 posts per digest
-run) and prefers Exa for anything the open web can answer. Run one digest,
-check the run cost in the Apify console, then decide your schedule.
+The X scraper (`apidojo/tweet-scraper`) is **pay-per-result** and requires
+a **paid Apify plan**; it does not run on Apify's free tier. Without one,
+the digest runs on Exa alone (web and news). The skill caps sweeps by
+default (≤5 queries × ≤100 posts per digest run) and prefers Exa for
+anything the open web can answer. Run one digest, check the run cost in
+the Apify console, then decide your schedule.
 
 ## Email is optional (and not part of this template)
 

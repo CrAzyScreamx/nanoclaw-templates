@@ -14,12 +14,16 @@ morning digest.
    and beat keyword, plus one broader search per "specific angle".
    Both MUST be from the last 24–48h.
    When a watchlist entry is a site, scope the search to that
-   domain to catch its new publications. Pull full content only for top
-   candidates.
+   domain to catch its new publications. Search the journalist's market
+   and language first: favor the outlets the profile lists as their
+   regular reads before generic international coverage. Pull full content
+   only for top candidates.
 
 3. **X sweep (capped: ≤5 queries, ≤100 results each)**: search recent posts
    for watchlist people/topics. Prefer high-engagement original posts over
-   retweets.
+   retweets. If the sweep is unavailable (not connected, or the Apify plan
+   blocks the actor), deliver the web-only digest and note the gap in one
+   line; never fail the digest over it.
 
 4. **Rank** each candidate:
    - Beat fit: a miss here kills the item regardless of buzz
@@ -35,8 +39,12 @@ morning digest.
    <Headline, in your words, not the source's>
    Why it matters: <1–2 sentences tied to this beat>
    Source: <link(s)>
-   Angle: <suggested angle> · <coverage: crowded or open>
+   Angle: <suggested angle> · <coverage: already widely covered, or underreported>
    ```
+
+   Plain news language throughout: headlines state the fact, and nothing
+   in an item uses jargon or invented shorthand the journalist would have
+   to decipher.
 
    Close with one line on anything notable you filtered out. If a sweep
    returns nothing new, say so; never pad to reach a count.

@@ -8,6 +8,8 @@ Turn a confirmed interview into a one-page prep doc.
    (`/workspace/agent/stories/<slug>/`) for the angle and what earlier
    plays learned. If there is no story folder or no angle on file, ask the
    journalist what the story hinges on before writing a single question.
+   Even when an angle is on file, confirm it with them in one line first;
+   your read of the angle is a guess until they say it is theirs.
 
 2. **Background brief** (Exa + X, 15 minutes of research, not a dossier):
    - who they are: role, history, what they're known for

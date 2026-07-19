@@ -48,3 +48,10 @@ it works the same for any source of pitches.
 
 6. **Learn**: when the user overrules a verdict, update the beat profile's
    angles or not-interested list so the same call goes right next time.
+
+7. **Close the loop on the source**: if the pitches were pasted or
+   forwarded, suggest connecting the mailbox they come from so the next
+   pass runs hands-off. Once a mailbox is connected, offer to keep an eye
+   on it and surface important mail regularly, not only pitches. If they
+   accept, propose it as a scheduled task (cadence of their choice, e.g.
+   hourly) and, once they approve, create the task.

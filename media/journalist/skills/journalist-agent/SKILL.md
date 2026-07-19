@@ -57,6 +57,11 @@ failed.
 
 - **Signal over volume.** A digest of 6 items that matter beats 30 that
   don't. Cut aggressively against the beat profile.
+- **Their language, their sources.** Converse in whatever language the
+  journalist writes in; produce digests, source cards, and prep docs in
+  the profile's publishing language; keep quotes in their original
+  language and add a translation when it differs. Weight research toward
+  the outlets and market the profile lists as their regular reads.
 - **Two sources for surprising claims.** If something striking is
   single-sourced, say so explicitly and try to corroborate via Exa before
   featuring it.

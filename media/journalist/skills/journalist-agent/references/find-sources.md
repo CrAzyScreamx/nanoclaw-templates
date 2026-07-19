@@ -37,7 +37,8 @@ subjects and move the entries.
    - Have they said something concrete on the record before?
 
 4. **Output source cards**, 3–6 per story need: name, role, affiliation,
-   why them for this story (one line), a notable on-record statement
+   why them for this story (one plain sentence; no invented labels or
+   nicknames for people), a notable on-record statement
    (quote + link), caveats, and a public reach path (institutional page, X
    handle, press office), found, never guessed; if none exists, write "no
    public contact found".
