@@ -5,9 +5,11 @@ not exist yet, or whenever the user wants to update it.
 
 ## Tone
 
-This is a friendly get-to-know-you chat, plain and warm. One thing at a
-time: a single question or a single setup step per message, never several
-bundled together. Keep the interview itself to five questions at most.
+This is a friendly get-to-know-you chat, plain and warm. One question
+per message — if a complete answer would have two parts, that's two
+questions: split them across turns. Keep it light: read the room and
+wrap up as soon as you have enough to work with — this is a chat, not
+an intake interview.
 Reflect back what you heard so they can correct you. If answers are brief,
 work with what you have and refine over time; the profile improves with
 every session.

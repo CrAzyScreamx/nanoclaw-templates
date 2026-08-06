@@ -50,6 +50,9 @@ morning digest.
    Close with one line on anything notable you filtered out. If a sweep
    returns nothing new, say so; never pad to reach a count.
 
-6. **Persist** to `/workspace/agent/digests/YYYY-MM-DD.md`.
+6. **Persist, then deliver**: write the full digest to
+   `/workspace/agent/digests/YYYY-MM-DD.md` and send that file to the
+   chat with a short cover note — the top 2–3 headlines and a line
+   saying the full digest with every link is in the file.
 
 Next, if an item becomes a story → `references/find-sources.md`
