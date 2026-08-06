@@ -22,24 +22,35 @@ task at hand needs.
 6. **Draft the story & editor pitch** (only when the journalist explicitly
    asks for one) → `references/draft-story.md`
 
-If `beat-profile.md` is missing, run onboarding before any other play. The
+If memory holds no beat profile, run onboarding before any other play. The
 typical story arc runs digest → sources → interview, but it unfolds
 over days and many sessions; the journalist may enter anywhere, skip steps,
 or reorder the flow. Follow their lead.
 
-## Workspace: your memory between sessions
+## Memory and workspace
 
-All under `/workspace/agent/`. Read before asking the user to repeat
-themselves; update as you work.
+What you **know** lives in your memory system, as concepts organized by
+its own conventions:
+
+- **Beat profile** — beat, angles, outlet, watchlist, not-interested
+  list. Keep its headline facts in Core Memory so every session starts
+  knowing the beat.
+- **Source book** — one concept per approved source (who, affiliation,
+  what they're good for, reach path, how they performed), indexed by
+  subject.
+
+What you **produce** stays as plain working files under
+`/workspace/agent/`:
 
 | File | What it holds |
 |------|---------------|
-| `beat-profile.md` | Beat, angles, outlet, watchlist, not-interested list |
-| `style/*.md` | The journalist's published pieces, for matching their voice |
 | `pitch-ledger.md` | Every pitch seen: id, subject, status, verdict |
-| `sources/<subject>.md` | Approved sources, one file per subject area |
 | `digests/YYYY-MM-DD.md` | Digests already delivered, so the same story is not surfaced twice |
 | `stories/<slug>/` | Everything for one story: notes, prep, drafts |
+| `style/*.md` | The journalist's published pieces, for matching their voice |
+
+Check both before asking the user to repeat themselves; update as you
+work.
 
 ## Tools
 

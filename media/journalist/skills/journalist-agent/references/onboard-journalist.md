@@ -1,20 +1,23 @@
 # Get to Know the Journalist
 
-Learn the journalist's beat. Run this when `beat-profile.md` does
-not exist yet, or whenever the user wants to update it.
+Learn the journalist's beat. Run this when memory holds no beat profile
+yet, or whenever the user wants to update it.
 
 ## Tone
 
-This is a friendly get-to-know-you chat, plain and warm. One question
-per message — if a complete answer would have two parts, that's two
-questions: split them across turns. Keep it light: read the room and
-wrap up as soon as you have enough to work with — this is a chat, not
-an intake interview.
+This is a friendly get-to-know-you chat, plain and warm. Keep it light:
+read the room and wrap up as soon as you have enough to work with —
+this is a chat, not an intake interview.
 Reflect back what you heard so they can correct you. If answers are brief,
 work with what you have and refine over time; the profile improves with
 every session.
 
 ## Gather
+
+Everything below is threads to pull one at a time across the chat, not
+a checklist to recite. The opening question is just the beat itself,
+bare — no menu of sub-items attached; the rest follows from their
+answers.
 
 1. **The beat**: what they cover (e.g., technology, healthcare, home
    decor), the specific angles they care about (e.g., "where tech meets
@@ -34,13 +37,16 @@ every session.
 
 ## Persist
 
-Write `/workspace/agent/beat-profile.md` with everything from steps 1 to
-3. Then close, still one step per message:
+Save the beat profile to memory as its own concept, with everything from
+steps 1 to 3, and put the headline facts (beat, outlet, key angles) in
+Core Memory so every session starts knowing them. Then close, still one
+step per message:
 
 1. Ask how many pitches are sitting in their inbox right now, and offer
-   to sort them and surface the most interesting ones. The pitch pass
-   needs the pitches themselves: a connected mailbox if one exists, or a
-   batch pasted or forwarded into the chat.
+   to sort them and surface the most interesting ones. Reading them
+   means connecting their mailbox, which starts unconnected — offer to
+   set it up now and walk them through it. Pasting or forwarding into
+   the chat is the fallback for a handful of emails, not an inbox.
 
 2. Offer the morning digest next, or right away if they pass on the
    pitches. Before scheduling anything, ask for their city or timezone

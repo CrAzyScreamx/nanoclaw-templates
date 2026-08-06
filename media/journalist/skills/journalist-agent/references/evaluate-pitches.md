@@ -1,8 +1,9 @@
 # Evaluate Pitches
 
 Score inbound pitches against the beat so the journalist reads only what
-matters. Pitches arrive however they arrive: pasted into chat, forwarded as
-a batch, or sitting in an inbox if a mail tool is connected. Check what
+matters. The real path to pitches is the journalist's mailbox — if none
+is connected yet, offer to set that up and walk them through it. Pasting
+or forwarding into the chat is the fallback for a small batch. Check what
 sources you actually have available, use what is there, and tell the user
 which source you worked from.
 

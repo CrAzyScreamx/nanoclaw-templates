@@ -5,17 +5,15 @@ public channels.
 
 ## The source book
 
-`/workspace/agent/sources/` holds every source the journalist has approved,
-one file per subject area (e.g. `sources/ai-policy.md`). Each entry is a
-source card: name, affiliation, what they are good for, public reach path,
-stories they appeared in, and how they performed. It grows into the
-journalist's private directory of trusted voices, so **check it first**; a
-source who already delivered beats a cold one.
+The source book lives in your memory system: one concept per approved
+source (name, affiliation, what they are good for, public reach path,
+stories they appeared in, how they performed), organized and indexed by
+subject following your memory conventions. It grows into the
+journalist's private directory of trusted voices, so **check it first**;
+a source who already delivered beats a cold one.
 
-At scale, stay selective: list the folder to see the subjects, then read or
-grep only the file(s) relevant to this story; never load the whole folder.
-When one subject file grows past roughly 30 sources, split it into narrower
-subjects and move the entries.
+At scale, stay selective: scan the relevant subject index, then read
+only the sources that fit this story; never load the whole book.
 
 ## Steps
 
@@ -45,9 +43,9 @@ subjects and move the entries.
 
 ## Keep the source book growing (two checkpoints)
 
-1. **On approval**: when the journalist picks sources from your cards, add
-   each to the matching subject file in `sources/` (create the file if the
-   subject is new), marked "approved for <story slug>".
+1. **On approval**: when the journalist picks sources from your cards,
+   add each to the source book in memory (create the subject index if
+   the subject is new), marked "approved for <story slug>".
 2. **After the story** (optional, ask once and casually): which sources
    came through? Note who delivered strong material and who fell short of
    expectations, so future searches rank them accordingly.
