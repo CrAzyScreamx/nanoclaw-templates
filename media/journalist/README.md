@@ -9,9 +9,13 @@ fabrication; the journalist writes, verifies, and publishes.
 
 ```
 journalist/
-├── .mcp.json                       # MCP server (Apify X scraper): no secrets
-├── context/
-│   └── instructions.md             # REQUIRED: the agent's standing brief
+├── plugin.json                     # Agent Plugins manifest (marks the folder as a plugin)
+├── mcp.json                        # MCP server (Apify X scraper): placeholder env value, no secrets
+├── ai.nanoco.nanoclaw/
+│   ├── context/
+│   │   └── instructions.md         # the agent's standing brief (NanoClaw extension dir)
+│   └── tasks/
+│       └── morning-digest.md       # daily 9 AM digest (created PAUSED; see below)
 ├── skills/
 │   └── journalist-agent/           # one skill: the reporting workflow (auto-triggers on newsroom tasks)
 │       ├── SKILL.md                #   entry: operating logic + routing to the plays below
@@ -23,8 +27,6 @@ journalist/
 │           ├── prepare-interview.md    #   one-page prep docs
 │           ├── draft-story.md          #   drafts + editor pitches, on explicit request only
 │           └── credentials.md          #   connecting the Apify key via OneCLI (read on auth errors)
-├── tasks/
-│   └── morning-digest.md           # daily 9 AM digest (created PAUSED; see below)
 └── README.md                       # this file
 ```
 
@@ -62,11 +64,11 @@ new on my beat?").
 
 **No API keys live in this template.** The OneCLI gateway holds credentials
 in its vault and injects them into outbound HTTPS calls at the proxy
-boundary. `.mcp.json` carries `command` + `args` and never a real key.
+boundary. `mcp.json` carries `command` + `args` and never a real key.
 
 **Exception: Apify's placeholder env (leave it as-is).**
 `@apify/actors-mcp-server` needs `APIFY_TOKEN` to be *present* to boot, so
-`.mcp.json` sets it to the dummy value `"placeholder"`. It is not the
+`mcp.json` sets it to the dummy value `"placeholder"`. It is not the
 credential: once you connect Apify, the real token is injected automatically
 for `api.apify.com` at request time. Never replace it with a real token.
 
@@ -101,6 +103,6 @@ the chat; the scoring rubric is the same.
 
 X + open web covers the v1 sourcing loop. If you need more networks or hit
 reliability limits, the managed upgrade path is Bright Data's social MCP:
-swap or add it in `.mcp.json` and register its host in OneCLI the same way.
+swap or add it in `mcp.json` and register its host in OneCLI the same way.
 Avoid cookie/session-based LinkedIn scraping in any setup; it violates
 LinkedIn's terms.

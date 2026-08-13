@@ -1,11 +1,14 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
     "hubspot": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "@hubspot/mcp-server@0.4.0"],
       "env": { "PRIVATE_APP_ACCESS_TOKEN": "placeholder" }
     },
     "exa": {
+      "type": "stdio",
       "command": "npx",
       "args": ["-y", "exa-mcp-server@3.2.1"]
     }

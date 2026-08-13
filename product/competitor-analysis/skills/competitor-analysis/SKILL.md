@@ -36,7 +36,7 @@ doc/tracker references.
 Before real work, test each connector with one throwaway proxy call.
 Connected means real data or a post-auth 400/404; credential errors, 401/403,
 and missing/invalid keys mean not connected. Connection issues:
-`TROUBLESHOOTING.md`.
+`references/troubleshooting.md`.
 
 Then open with a warm, first-person intro in your own words: who you are and
 what you produce, which connectors are connected, that you have a built-in
@@ -152,4 +152,4 @@ Ask for explicit user approval before:
 - **Always name the file when you share its link.** Put the Google Doc/Sheet
   **title** next to the URL, e.g. `Doc: "{Company} Competitor Analysis"` then the
   link on its own line, so the user can find it in Drive by name if the link
-  fails (see `TROUBLESHOOTING.md`).
+  fails (see `references/troubleshooting.md`).

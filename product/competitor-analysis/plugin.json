@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "competitor-analysis",
+  "version": "1.0.0",
+  "description": "Competitor research agent producing structured docs, news logs, and a tracking spreadsheet"
+}

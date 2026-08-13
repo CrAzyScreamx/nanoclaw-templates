@@ -10,9 +10,11 @@ else in this folder is loaded by the parser.
 
 ```
 sdr/
-├── .mcp.json                       # MCP servers (HubSpot, Exa): command + args only, no secrets
-├── context/
-│   └── instructions.md             # REQUIRED: the agent's standing brief
+├── plugin.json                     # Agent Plugins manifest (marks the folder as a plugin)
+├── mcp.json                        # MCP servers (HubSpot, Exa): placeholder env values, no secrets
+├── ai.nanoco.nanoclaw/
+│   └── context/
+│       └── instructions.md         # the agent's standing brief (NanoClaw extension dir)
 ├── skills/
 │   └── sdr-agent/                  # one skill: the SDR operating system (auto-triggers on SDR tasks)
 │       ├── SKILL.md                #   entry: operating logic + routing to the plays below
@@ -24,8 +26,8 @@ sdr/
 └── README.md                       # this file
 ```
 
-Optional, if you need them: extra `context/additional_context/*.md` files,
-referenced from `instructions.md` by plain relative path (e.g.
+Optional, if you need them: extra `ai.nanoco.nanoclaw/context/additional_context/*.md`
+files, referenced from `instructions.md` by plain relative path (e.g.
 `additional_context/<file>.md`).
 
 ## Stamp an agent from this template
@@ -43,12 +45,12 @@ by task; it is not pre-loaded.
 containers as env vars. The OneCLI gateway holds your credentials in its vault
 and injects them into outbound HTTPS calls at the proxy boundary, so the
 HubSpot/Exa MCP servers reach their APIs authenticated without the token
-ever sitting in `.mcp.json`, the container env, or chat context.
+ever sitting in `mcp.json`, the container env, or chat context.
 
-That is why `.mcp.json` here carries `command` + `args` and never a real key.
+That is why `mcp.json` here carries `command` + `args` and never a real key.
 
 **Exception — HubSpot's placeholder env (leave it as-is).** `@hubspot/mcp-server`
-refuses to start unless `PRIVATE_APP_ACCESS_TOKEN` is *present*, so `.mcp.json`
+refuses to start unless `PRIVATE_APP_ACCESS_TOKEN` is *present*, so `mcp.json`
 sets it to the dummy value `"placeholder"`. It is not the credential: once you
 connect HubSpot (either setup path below), the real key is injected
 automatically for `api.hubapi.com` at request time. Keep the placeholder, and
@@ -141,7 +143,8 @@ The original template gated tools like *send email*, *enrol in a sequence*, and
 *create/update a deal* behind a per-tool `requireApproval` list. NanoClaw enforces
 this in two layers:
 
-**Soft (behavioral).** `context/instructions.md` tells the agent to present
+**Soft (behavioral).** The standing brief (`ai.nanoco.nanoclaw/context/instructions.md`)
+tells the agent to present
 drafts and wait for an explicit "yes" before any send, enrolment, deal write, or
 bulk op. This is guidance the agent follows, not enforcement.
 

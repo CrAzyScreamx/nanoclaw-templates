@@ -58,8 +58,8 @@ Do what the request needs, not all four every time.
 
 ## ICP
 
-The configured ICP and approval rules live in the agent's standing brief
-(`context/instructions.md`). If the user hasn't given one, propose an ICP before
+The configured ICP and approval rules live in the agent's standing
+instructions (inlined at the top of this project's context). If the user hasn't given one, propose an ICP before
 building lists (industry, company size, geography, tech stack, a triggering
 signal, plus target titles/seniority) and let them adjust. The scoring rubric is
 in `references/prospect-research.md`.

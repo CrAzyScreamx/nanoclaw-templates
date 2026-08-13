@@ -6,20 +6,25 @@ how to test it before you open a PR.
 
 ## What a template is
 
-A template is a folder that NanoClaw stamps into a working agent. Its files map
-directly to what the template parser reads:
+A template is an [Agent Plugins](https://agent-plugins.org) 1.0.0 directory
+that NanoClaw stamps into a working agent. The portable parts (skills, MCP
+servers) follow the spec; the NanoClaw-specific parts live in the
+`ai.nanoco.nanoclaw/` extension directory:
 
 | Path | Purpose | Required |
 |------|---------|----------|
-| `context/instructions.md` | The agent's standing brief | **Yes** |
-| `context/additional_context/*.md` | Extra context, referenced from `instructions.md` by relative path (`additional_context/<file>`) | No |
-| `.mcp.json` → `mcpServers` | MCP tool servers (command + args only) | No |
+| `plugin.json` | Plugin manifest: `$schema` + `name` (the discovery marker) | **Yes** |
 | `skills/<name>/` | A skill (the whole folder is copied) | No |
-| `tasks/*.md` | Recurring scheduled tasks, created paused | No |
+| `mcp.json` → `mcpServers` | MCP tool servers (`stdio` / `streamable-http`, placeholder credentials only) | No |
+| `ai.nanoco.nanoclaw/context/instructions.md` | The agent's standing brief | No (recommended; non-empty if present) |
+| `ai.nanoco.nanoclaw/context/additional_context/*.md` | Extra context, referenced from `instructions.md` by relative path (`additional_context/<file>`) | No |
+| `ai.nanoco.nanoclaw/tasks/*.md` | Recurring scheduled tasks, created paused | No |
 | `README.md` | Human docs for the template | Recommended |
 
-The presence of `context/instructions.md` is what marks a folder as a template.
-See the main [README](README.md#anatomy-of-a-template) for the full anatomy.
+The presence of `plugin.json` is what marks a folder as a template. A plain
+Agent Plugin with no `ai.nanoco.nanoclaw/` extension dir is accepted; shipping a
+persona is recommended so the stamped agent is useful out of the box. See the
+main [README](README.md#anatomy-of-a-template) for the full anatomy.
 
 ## Where it goes: `<category>/<template>/`
 
@@ -35,8 +40,9 @@ predictable set of categories a newcomer can guess.
 
 Templates are public. Never commit API keys, tokens, or any credential.
 
-- `.mcp.json` carries `command` and `args` only. Do not add an `env` block with
-  real keys.
+- Credential-shaped `env` and `headers` values in `mcp.json` carry the literal
+  `"placeholder"`, never a real value. NanoClaw rejects a template whose
+  values match known credential formats.
 - Task scripts may call external services, but must not contain credentials.
 - Credentials are injected at request time by the OneCLI gateway, not baked into
   the template. If your template needs a service connected, document how to get
@@ -47,13 +53,16 @@ Templates are public. Never commit API keys, tokens, or any credential.
 
 1. Fork this repo and create a branch.
 2. Create your template at `<category>/<template>/`.
-3. Write `context/instructions.md`, the only required file.
-4. Add what the agent needs: `.mcp.json` (no secrets), any `skills/<name>/`
-   folders, optional recurring tasks under `tasks/*.md`, and a per-template
-   `README.md` covering what it does and which MCP servers and credentials it
-   expects. The provider is not set in the template; it is chosen on the agent
-   later.
-5. Test it end to end. `--template` resolves relative to your NanoClaw install's
+3. Write `plugin.json` (the only required file) and, ideally,
+   `ai.nanoco.nanoclaw/context/instructions.md` (the persona — recommended).
+4. Add what the agent needs: `mcp.json` (placeholder credentials only), any
+   `skills/<name>/` folders, optional recurring tasks under
+   `ai.nanoco.nanoclaw/tasks/*.md`, and a per-template `README.md` covering
+   what it does and which MCP servers and credentials it expects. The provider
+   is not set in the template; it is chosen on the agent later.
+5. Run the registry checks: `node scripts/check-templates.mjs` (the same
+   script CI runs).
+6. Test it end to end. `--template` resolves relative to your NanoClaw install's
    templates directory, not your clone, so do one of:
    ```bash
    # Option A: point the templates dir at your clone, then stamp the bare ref
@@ -67,18 +76,21 @@ Templates are public. Never commit API keys, tokens, or any credential.
    `ncl tasks list --status paused`. For a scripted task, also run it once
    with `ncl tasks run <task-id>` and inspect it with
    `ncl tasks get <task-id>`.
-6. Re-check the diff for any secret before you commit.
-7. Open a PR describing what the template does, including any predefined tasks
+7. Re-check the diff for any secret before you commit.
+8. Open a PR describing what the template does, including any predefined tasks
    and MCP servers it expects.
 
 ## PR checklist
 
 - [ ] Template lives under an appropriate `<category>/<template>/`.
-- [ ] `context/instructions.md` is present.
-- [ ] `.mcp.json` has no secrets (command and args only).
-- [ ] Every `tasks/*.md` file has a nonempty `schedule`, an optional nonempty
-      `script`, no other frontmatter fields, and a prompt body.
+- [ ] `plugin.json` is present with the exact 1.0.0 `$schema` and a valid `name`.
+- [ ] `ai.nanoco.nanoclaw/context/instructions.md` is present (registry policy).
+- [ ] `mcp.json` servers declare `type` and carry `"placeholder"` for any
+      credential-shaped `env`/`headers` value — no real keys anywhere.
+- [ ] Every `ai.nanoco.nanoclaw/tasks/*.md` file has a nonempty `schedule`, an
+      optional nonempty `script`, no other frontmatter fields, and a prompt body.
 - [ ] A per-template `README.md` explains the template and its credentials.
+- [ ] `node scripts/check-templates.mjs` passes.
 - [ ] Stamped and tested locally with a bare ref (via `NANOCLAW_TEMPLATES_DIR`
       or a copy into `templates/`).
 - [ ] No API keys, tokens, or other secrets anywhere in the diff.

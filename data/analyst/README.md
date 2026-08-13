@@ -9,10 +9,15 @@ grows around one principal's stack — no bundled tools, no hard-wired databases
 
 ```
 analyst/
-├── context/
-│   ├── instructions.md                # REQUIRED: the persona — proactive, fact-first, close the loop
-│   └── additional_context/
-│       └── memory-structure.md        # where learned state lives: metrics, pipelines, audiences, systems
+├── plugin.json                        # Agent Plugins manifest (marks the folder as a plugin)
+├── ai.nanoco.nanoclaw/
+│   ├── context/
+│   │   ├── instructions.md            # the persona — proactive, fact-first, close the loop
+│   │   └── additional_context/
+│   │       └── memory-structure.md    # where learned state lives: metrics, pipelines, audiences, systems
+│   └── tasks/
+│       ├── morning-pipeline-check.md  # weekdays at 07:00 — pipeline status before anyone opens a report
+│       └── weekly-report-integrity.md # Mondays at 09:00 — metric drift and report disagreements
 ├── skills/
 │   ├── pipeline-check/
 │   │   └── SKILL.md    # verify the scheduled data work ran and produced sensible output
@@ -24,15 +29,13 @@ analyst/
 │   │   └── SKILL.md    # turn a report/widget request into something buildable
 │   └── schema-and-cleanup/
 │       └── SKILL.md    # fix bad data and change shape without breaking readers
-└── tasks/
-    ├── morning-pipeline-check.md      # weekdays at 07:00 — pipeline status before anyone opens a report
-    └── weekly-report-integrity.md     # Mondays at 09:00 — metric drift and report disagreements
+└── README.md                          # this file
 ```
 
 ## Memory
 
 Learned state does not live in the template — it lives in `memory/`, described by
-`context/additional_context/memory-structure.md` and built as the agent works. The
+`ai.nanoco.nanoclaw/context/additional_context/memory-structure.md` and built as the agent works. The
 skills and tasks read from and write to these paths:
 
 - `memory/principal.md` — who the analyst serves, the platforms and pipelines they
@@ -62,7 +65,7 @@ should work against.
 
 ## Notes
 
-- **No `.mcp.json`.** Every analyst's stack is different (Postgres, MongoDB, a
+- **No `mcp.json`.** Every analyst's stack is different (Postgres, MongoDB, a
   BI tool, a warehouse). Add servers as needed via the `/add-*-tool` skills; OneCLI
   injects credentials at request time, so no secrets live here.
 - **Fact-first by default.** The agent reads the live table, thread, or file before

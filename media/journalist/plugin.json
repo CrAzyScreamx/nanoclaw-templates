@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "journalist",
+  "version": "1.0.0",
+  "description": "Journalist agent: beat monitoring, pitch evaluation, source finding, and interview prep"
+}

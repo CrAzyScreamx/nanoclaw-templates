@@ -25,7 +25,7 @@ Walk the user through:
    sent as `Authorization: Bearer`).
 4. Retry the failed call.
 
-One caution: `.mcp.json` sets `APIFY_TOKEN: "placeholder"` only so the MCP
+One caution: `mcp.json` sets `APIFY_TOKEN: "placeholder"` only so the MCP
 server can boot. That placeholder is not the credential and must never be
 replaced with a real token; the real token lives only in the OneCLI vault.
 

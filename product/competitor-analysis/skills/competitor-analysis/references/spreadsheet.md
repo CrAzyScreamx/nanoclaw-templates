@@ -12,7 +12,7 @@ at-a-glance overview.
 - Only create a tracker if none is set yet.
 
 ```
-Spreadsheet ID: [YOUR_TRACKER_SHEET_ID]        # set in context/instructions.md
+Spreadsheet ID: [YOUR_TRACKER_SHEET_ID]        # set in the standing instructions
 Target sheet (tab): [sheet/tab name], sheetId: [N]
 ```
 

@@ -1,0 +1,6 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "sdr",
+  "version": "1.0.0",
+  "description": "Outbound SDR agent: prospecting, enrichment, sequencing, and CRM hygiene on HubSpot and Exa"
+}
