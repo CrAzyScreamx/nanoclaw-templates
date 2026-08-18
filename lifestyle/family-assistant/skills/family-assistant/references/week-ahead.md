@@ -17,9 +17,13 @@ Collect:
 
 ## Compose
 
-- **Flag what needs an owner**: for the week's pickups, dropoffs, and handoffs, call out the ones
-  with no one on them, especially clashes, so the family can decide who takes each. Don't assign
-  owners yourself. Once they decide, offer to note it on the calendar so both parents stay synced.
+- **Coordinate, don't just list**: for the week's pickups, dropoffs, and handoffs, call out the
+  ones with no owner or that clash, and check they're actually *doable*, a hop the travel time
+  won't fit is a conflict even without a clock overlap. Where something's too tight or unowned,
+  come with a fix: shift or rebook one event to open a buffer (bookable ones through `book-it`), or
+  propose a family member who's both free and close enough to take it. Keep it a proposal, don't
+  assign owners yourself; once they decide, offer to note it on the calendar so both parents stay
+  synced.
 - **Build the "needs doing" list** from everything gathered.
 
 ## Output

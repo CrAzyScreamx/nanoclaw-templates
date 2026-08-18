@@ -31,6 +31,17 @@ always wins over a reference's fixed path.
 | **price-watch** | watching a standing wishlist of products and flagging when something drops | `references/price-watch.md` |
 | **book-it** | helping make an appointment or reservation: finding the place, requesting it, holding the slot | `references/book-it.md` |
 
+## Scheduled runs
+
+**Turning one on:** confirm the cadence, then **list the current tasks before creating anything**,
+several ship paused, so if one for this run already exists, update its schedule and resume it
+rather than adding a duplicate. Create a new task only when none exists, with the prompt "Follow
+the `family-assistant` skill's `<capability>` reference and post to the family's group chat." Act
+only on a clear yes, or a trigger (price-watch's starts on its first item).
+
+**Turning one off:** when a run no longer has a reason to fire, offer to remove it rather than
+leave it firing on empty; don't delete without asking.
+
 ## Output style
 
 - **Plain, warm, brief**: a parent or a kid reads it on their phone. Bullets over paragraphs.

@@ -57,13 +57,12 @@ matching `references/*.md`):
 
 ## Configure before first use
 
-Nothing to fill in by hand. The agent builds the family's profile conversationally on first
-contact and keeps it in its memory (see
-`skills/family-assistant/references/family-onboarding.md`): the people, the
-calendars and inbox to read, food staples and allergies, schools, activities,
-and which recurring tasks they want and when. That profile is the source of
-truth every capability grounds in, and the agent keeps it current as things
-change.
+Nothing to fill in by hand. On first contact the agent asks a **short core** conversationally
+(see `skills/family-assistant/references/family-onboarding.md`): the people, the Google
+connection, where they live, allergies, and the standard briefings' timing. Everything else, the
+store and shop day, staples, activities, schools, watchlist, how each person likes to be helped,
+it **learns over time** from real use rather than interrogating up front. That profile is the
+source of truth every capability grounds in, and the agent keeps it current as things change.
 
 ## Stamp an agent from this template
 
@@ -80,7 +79,8 @@ read for context, keep it **read-only** and it stays silent there.
 Three tasks ship in `ai.nanoco.nanoclaw/tasks/`, each **created paused** (the engine stamps every
 template task paused): the **morning brief** and **week-ahead** come as standard, so at onboarding
 the agent confirms their times, updates the schedules, and resumes them; **memory hygiene** is a
-non-destructive weekly audit of the agent's own memory that the agent offers during onboarding.
+non-destructive weekly audit of the agent's own memory that stays paused, but the agent **actively
+recommends activating** it during onboarding.
 The remaining capability runs (meal plan, school sweep, price-watch) are opt-in and ship as no
 files at all: the agent creates each task once the family says yes and picks the time. Every
 `schedule` cron in a shipped file is only a sensible default.

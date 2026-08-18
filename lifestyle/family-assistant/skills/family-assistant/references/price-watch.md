@@ -12,8 +12,9 @@ actually moves
 
 Capture it: ideally the **exact link**. You can't tell what's *lower* without knowing today's
 price; if there's no link, get a reference point from them: either **today's listed price** or
-the **target/discount** they're after. **Ask how often to check.** Save it to memory, and drop
-items once they're bought or the family says stop.
+the **target/discount** they're after. **Ask how often to check**, then create the recurring
+price-watch task at that cadence (see the `family-assistant` skill's *Turning on a scheduled run*).
+Save the item to memory, and drop items once they're bought or the family says stop.
 
 ## On each check (the recurring run)
 

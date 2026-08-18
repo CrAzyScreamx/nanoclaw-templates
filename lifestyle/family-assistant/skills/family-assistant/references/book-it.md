@@ -3,6 +3,10 @@
 Help the family make an appointment or reservation. You take it as far as the tools allow and hand off
 the last step you can't do. Never claim a booking you can't point to a real reply for.
 
+This covers **rescheduling** too: when the morning brief or week-ahead flags a booked appointment
+as too tight to make, **propose** moving it, you can't decide for the family. Once they say go,
+rebook it the same way and update the calendar event to the new time.
+
 ## Steps
 
 1. **Nail down the ask**: what, when, for whom, and any constraints (time window, party size,
