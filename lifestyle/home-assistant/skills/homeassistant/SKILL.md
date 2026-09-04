@@ -1,6 +1,6 @@
 ---
 name: homeassistant
-description: Run the user's home through Home Assistant - read what a device is doing, turn things on and off, set temperature, check sensors, and wire up a new integration as a named flow. Use it for anything about the house — "turn off the kitchen light", "is the door locked", "how warm is the bedroom", "did the washing machine finish", "what rooms do I have", "I connected my vacuum, add a flow for it", and for first-time setup or a connection that stopped working.
+description: Run the user's home through Home Assistant - read what a device is doing, turn things on and off, set temperature, check sensors. Use it for anything about the house — "turn off the kitchen light", "is the door locked", "how warm is the bedroom", "did the washing machine finish", "what rooms do I have", and for first-time setup or a connection that stopped working.
 ---
 
 # Home Assistant

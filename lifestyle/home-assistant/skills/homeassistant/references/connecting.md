@@ -36,30 +36,12 @@ the server is a core integration.
    administrator accounts"** option, when on, 401s a non-admin user's token, so
    create it as an administrator.
 
-## 2. The URL — HTTPS only
+## 2. The URL
 
-Their Home Assistant base URL must be **HTTPS**. A plain `http://` address is refused when the server is
-wired and will not save. The OneCLI gateway has to reach it, and its certificate
-has to be valid, so a `192.168.x.x` / `homeassistant.local` address is a poor
-fit even over HTTPS. If they offer one, say that plainly and give them the two
-ways to get an HTTPS address:
-
-- **Their own reverse proxy** — Caddy, nginx, or a Cloudflare Tunnel in front
-  of Home Assistant. Free, theirs to run.
-- **Home Assistant Cloud (Nabu Casa)** — the no-effort route: it hands them a
-  `https://<id>.ui.nabu.casa` address with no port forwarding and no
-  certificate work. It is a **paid subscription in their own name**, on the
-  single Home Assistant Cloud plan — see
-  <https://www.nabucasa.com/pricing/>. Nothing here is billed through NanoClaw.
-
-**Home Assistant on the NanoClaw host itself is not an exception.** The URL
-check does accept `http://host.docker.internal:8123`, but every request
-from this container goes through the OneCLI gateway, and the gateway container
-cannot resolve that name, so the call never connects — with or without a
-token. A local Home Assistant needs an HTTPS hostname the gateway can resolve,
-the same as a remote one.
-
-Ask for the URL, read it back, and only then move on.
+Ask for their Home Assistant URL, read it back, and only then move on. If they
+use Home Assistant Cloud (Nabu Casa), that is a **paid subscription in their
+own name** — <https://www.nabucasa.com/pricing/>; nothing here is billed
+through NanoClaw.
 
 ## 3. The token first — where is OneCLI?
 
@@ -81,7 +63,8 @@ Assistant hostname, and hand it over:
 <their-onecli-url>/connections/secrets?create=generic&host=<their-ha-host>&name=Home%20Assistant&header=Authorization&format=Bearer%20%7Bvalue%7D
 ```
 
-The host is the hostname alone, no scheme. The link opens a prefilled form; they
+The host is the hostname alone, no scheme, no port, no path, and **one host
+per vault entry** — a comma-separated list never matches. The link opens a prefilled form; they
 paste the long-lived token into the value field and save.
 
 **If they cannot:** someone with access to the NanoClaw host has to create the
@@ -93,7 +76,7 @@ write the vault entry yourself.
 Only once the vault entry exists:
 
 ```
-add_mcp_server({ name: "homeassistant", url: "https://<their-host>/api/mcp/assist" })
+add_mcp_server({ name: "homeassistant", url: "<their-url>/api/mcp/assist" })
 ```
 
 Two things to say as you do it, because both are visible to them and both look
@@ -150,8 +133,7 @@ Quote the provider's own message when the error carries one. Then work down:
 |---|---|---|
 | Token belongs to a non-admin user and "Only allow administrator accounts" is on | Every call 401s, including the first, straight after wiring | New token from an administrator account (section 1, step 3), then update **only the value** of the vault entry — or an admin turns the option off under Settings → Devices & services → Model Context Protocol Server → Configure. |
 | Token revoked, or Home Assistant reinstalled | Worked before, 401s now | New long-lived token (section 1, step 3), then update **only the value** of the existing vault entry. |
-| Vault entry wrong | 401 from the first call, token is an admin's | Host pattern typo, a scheme or `/api/mcp/assist` left in the host field, or a format of `{value}` instead of `Bearer {value}`. Fixed through the same link — never by asking for the token. |
-| Agent in `selective` secret mode, secret not selected for it | Nothing is injected at all; the entry is provably correct | An operator selects the secret for this agent, host-side. |
+| Vault entry wrong | 401 from the first call, token is an admin's | Host pattern typo, a scheme, port or `/api/mcp/assist` left in the host field, several hosts in one comma-separated pattern, or a format of `{value}` instead of `Bearer {value}`. Fixed through the same link — never by asking for the token. || Agent in `selective` secret mode, secret not selected for it | Nothing is injected at all; the entry is provably correct | An operator selects the secret for this agent, host-side. |
 | Server not loaded | No `homeassistant` tools exist at all, and no call has failed | The group was not restarted after approval (section 4). An operator runs `ncl groups restart`. |
 | Stale OAuth registration from a connect made before the vault entry existed | No `mcp__homeassistant__*` tools at all, the agent is told to authorize or to use `/mcp`, no 401 anywhere in evidence, and the vault entry is provably correct | **Operator, on the host.** Delete the `homeassistant\|…` key from the `mcpOAuth` object in `data/v2-sessions/<group-id>/.claude-shared/.credentials.json`, reset `.claude-shared/mcp-needs-auth-cache.json` to `{}`, then `ncl groups restart --id <group-id> --message "reconnect home assistant"`. Nothing inside the container can clear this, and no amount of vault fixing will: the client has stopped making injectable requests. |
 

@@ -32,7 +32,7 @@ home-assistant/
 │   └── homeassistant/                # the router + all mechanics
 │       ├── SKILL.md                  #   entry: capabilities → references, the tools, day-to-day control
 │       └── references/
-│           ├── connecting.md         #   the integration, the HTTPS URL, the token, every 401
+│           ├── connecting.md         #   the integration, the URL, the token, every 401
 │           └── onboarding.md         #   probe first, then infer the house from the snapshot
 └── README.md                         # this file
 ```
@@ -53,7 +53,7 @@ but nothing works until they are true.
 | 2 | The **Model Context Protocol Server** integration added, with the **Assist** API selected | Settings → Devices & services → Add integration → "Model Context Protocol Server" |
 | 3 | The entities you want it to see **exposed to Assist** | Settings → Voice assistants → Expose |
 | 4 | A **long-lived access token**, created by an **administrator** user | your HA profile → Security → Long-Lived Access Tokens → Create Token |
-| 5 | An **HTTPS** endpoint for HA, reachable from the container | see below |
+| 5 | Your Home Assistant URL | the agent asks for it in chat |
 
 Nothing to install: the integration ships with Home Assistant core. Step 3 is
 where the agent's reach is actually decided — it can only read and control what
@@ -64,33 +64,12 @@ typical house is mostly visible on day one. **Locks are not auto-exposed** and
 stay invisible until you expose them on purpose. Multi-select on the Expose tab
 does the rest in one pass.
 
-### The URL has to be HTTPS
-
-NanoClaw only accepts plain `http://` for `localhost`, so
-`http://192.168.1.x:8123` will not stamp — a LAN address is neither localhost
-nor HTTPS, and it is rejected before the agent ever calls it. You need one of:
-
-- **Your own reverse proxy** — Caddy, nginx, or a Cloudflare Tunnel in front of
-  HA. Free, some setup.
-- **Home Assistant Cloud (Nabu Casa)** — the no-effort route. It is a **paid
-  subscription that you buy and hold yourself**; this template ships no account
-  and no key. Current plans and pricing:
-  <https://www.nabucasa.com/pricing/>. The plan is **Home Assistant Cloud**; it
-  gives you an `https://<id>.ui.nabu.casa` hostname, which is all the agent
-  needs.
-
-**HA on the same host is not a shortcut.** The URL check exempts `localhost`,
-`127.0.0.1` and `host.docker.internal` from the HTTPS rule, so
-`http://host.docker.internal:8123` stamps. It does not connect: the agent
-container's only route out is the OneCLI gateway, which sits on the agent's
-internal Docker network under the name `host.docker.internal` itself, so that
-address reaches the gateway, not your machine, and the dial fails before any
-header matters. A local HA needs an HTTPS hostname the gateway can resolve,
-same as a remote one.
-
-The endpoint the agent connects to is `https://<your-host>/api/mcp/assist` —
-the Assist API's own path, which Home Assistant serves whatever else the
-integration is configured with.
+The endpoint the agent connects to is `<your-url>/api/mcp/assist` — the Assist
+API's own path, which Home Assistant serves whatever else the integration is
+configured with. If you reach Home Assistant through
+[Home Assistant Cloud (Nabu Casa)](https://www.nabucasa.com/pricing/), that is
+a **paid subscription you buy and hold yourself**; this template ships no
+account and no key.
 
 ## Stamp an agent from this template
 
@@ -104,7 +83,7 @@ memory into another agent's chat history, and there is no way to unmix them
 afterwards.
 
 Then wire it to a chat as usual (`/manage-channels`) and say hi. The agent
-introduces itself, asks for the HTTPS URL, walks you through putting the token in
+introduces itself, asks for the URL, walks you through putting the token in
 the OneCLI vault, and only then calls `add_mcp_server` (which raises an **admin
 approval card** — approve it). **Then restart the group.** MCP servers only load
 at container start, so nothing connects until you do:
@@ -140,7 +119,7 @@ gateway injects it into outbound calls at the proxy boundary:
 
 | Field | Value |
 |---|---|
-| API host | your HA hostname (the `<host>` in `https://<host>/api/mcp/assist`) |
+| API host | your HA hostname alone, no scheme, port or path — one host per vault entry, comma lists do not match |
 | Auth style | `Authorization: Bearer <token>` |
 | Scopes | none to pick — a long-lived access token carries the full permissions of the HA user it was created under |
 | Header | `Authorization` |
@@ -163,7 +142,7 @@ an operator can put the header on the server directly:
 
 ```bash
 ncl groups config add-mcp-server --id <group-id> --name homeassistant \
-  --url https://<host>/api/mcp/assist \
+  --url <your-url>/api/mcp/assist \
   --headers '{"Authorization":"Bearer <long-lived-token>"}'
 ncl groups restart --id <group-id> --message "reconnect Home Assistant"
 ```
