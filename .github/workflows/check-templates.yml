@@ -18,7 +18,11 @@ jobs:
       - uses: actions/checkout@v4
       - run: node scripts/build-index.mjs
       - name: index.json is up to date
-        run: git diff --exit-code index.json
+        run: |
+          git diff --exit-code index.json || {
+            echo "::error::index.json is stale. Run 'node scripts/build-index.mjs' and commit the result."
+            exit 1
+          }
 
   version-bump:
     if: github.event_name == 'pull_request'
