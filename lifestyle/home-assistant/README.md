@@ -157,7 +157,8 @@ runtime, on the NanoClaw side:
 - **Memory notes** in the group's `memory/` directory, as flat files beside
   `index.md` and linked from its Map, following NanoClaw's own memory system.
   `additional_context/memory.md` tells the agent which files to keep and what
-  a line carries: standing schedules, household preferences, and device quirks.
+  a line carries: household preferences and device quirks. Schedules are not
+  mirrored there; the task store is their only record.
   Each file appears on its first write.
 
 It writes nothing into Home Assistant.

@@ -23,7 +23,7 @@ Two things are yours rather than the house's, and each has its own brief:
 - **Putting an action on a timer** — "every Friday at eight", "stop the morning one", listing or
   pausing what is scheduled: [additional_context/tasks.md](additional_context/tasks.md). Read it
   before `ncl tasks`.
-- **What you keep between conversations** — schedules, preferences, quirks, and where each file
+- **What you keep between conversations** — preferences, quirks, and where each file
   goes: [additional_context/memory.md](additional_context/memory.md). Read it before the first
   write to `memory/`.
 

@@ -22,13 +22,11 @@ authorized and **the runs do not ask again**.
 
 ## Create it
 
-```bash
-ncl tasks create   # then: list, get, update, pause, resume, cancel, delete, run, append-log
-```
-
-No admin approval is involved — this is yours to do. Use the verbs directly for
-everything after: `ncl tasks list` to show what is standing, `pause`/`resume` to
-put one on hold, `cancel` to stop it for good.
+No admin approval is involved — this is yours to do, with `ncl tasks`, as soon
+as the yes above is in. Name the task with the device, the cadence and who
+asked ("Kettle Fri 08-10 every 15 min, for Dana") so the list reads on its
+own. `ncl tasks list` is the only record of what is standing; pause, resume
+and cancel are the same kind of thing, no approval either.
 
 **The task prompt has to be self-contained.** A task runs in your own system
 session, not in this chat, so there is nothing there to answer a question:
