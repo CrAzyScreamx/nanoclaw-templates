@@ -1,15 +1,58 @@
 # Home Assistant Agent Template
 
-A NanoClaw agent template for a house running [Home Assistant](https://www.home-assistant.io/).
-It talks to your own HA instance through Home Assistant's built-in
+No custom code, no add-on, no API wrapper: this agent talks to your own
+[Home Assistant](https://www.home-assistant.io/) through Home Assistant's built-in
 [**Model Context Protocol Server**](https://www.home-assistant.io/integrations/mcp_server/)
-integration, and reads and controls **what you have exposed to Assist** — that
-expose list, kept in Home Assistant, is the whole permission model. Connect a new
-device, expose it, tell the agent, and it is there.
+integration, and the **Assist expose list** you already keep in Home Assistant is
+the whole permission model. It reads and controls what is exposed, nothing else.
+Connect a new device, expose it, tell the agent, and it is there.
 
 Anything it can do can also be put on a schedule — "boil the kettle every
 Friday morning" — which anyone in the chat can ask for, set up once with a
 confirmation, and pause or cancel later.
+
+## What it deliberately doesn't do
+
+- **Writes nothing into Home Assistant.** No config, no automations, no expose
+  changes. When something looks wrong on that side it describes it and stops.
+- **Cannot widen its own reach.** Nothing said in chat exposes an entity; only
+  the Expose tab in Home Assistant does.
+- **Never emulates an action it has no intent tool for.** No chaining intents
+  to fake a missing capability; it says it cannot be done and why.
+- **Never handles the token.** A pasted credential is not repeated and is asked
+  to be rotated; the token lives in the OneCLI vault, not in chat or the template.
+
+## What a day looks like
+
+Once connected, this is the whole interaction model:
+
+```
+you:    is the front door locked
+agent:  No - Front Door is unlocked.
+
+you:    lock it
+agent:  Front Door lock - yes to lock it?
+you:    yes
+agent:  Front Door is locked.
+
+you:    how warm is the bedroom
+agent:  Bedroom: 19.5°, heating set to 21°.
+
+you:    boil the kettle every weekday at 7
+agent:  Every weekday at 07:00, turn on Tami4 in the Kitchen. First run is
+        tomorrow. Confirm?
+you:    yes
+agent:  Set. "Kettle weekdays 07:00, for Amit" - say stop it to pause or cancel.
+
+you:    turn on the garage light
+agent:  No garage light is exposed to Assist. Settings → Voice assistants →
+        Expose in Home Assistant, then tell me and I'll look again.
+```
+
+Every state it reports comes from a call made right then, never from earlier
+in the conversation. Anything that unlocks, opens, disarms, heats or starts a
+motor asks for a yes first; a schedule asks once, at creation, and never at
+run time.
 
 ## Layout
 

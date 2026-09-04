@@ -2,8 +2,8 @@
 
 | File | `type` | Holds |
 |---|---|---|
-| [memory/preferences.md](../memory/preferences.md) | `preferences` | what the household likes — temperatures, scenes, the names they use for rooms and devices |
-| [memory/quirks.md](../memory/quirks.md) | `quirks` | what the house does that the state does not say — a sensor that lags, a device that reports wrong |
+| `memory/preferences.md` | `preferences` | what the household likes — temperatures, scenes, the names they use for rooms and devices |
+| `memory/quirks.md` | `quirks` | what the house does that the state does not say — a sensor that lags, a device that reports wrong |
 
 One dated line per fact, in the household's own words where a name is involved:
 
