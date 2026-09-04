@@ -1,0 +1,196 @@
+# Home Assistant Agent Template
+
+A NanoClaw agent template for a house running [Home Assistant](https://www.home-assistant.io/).
+It talks to your own HA instance through Home Assistant's built-in
+[**Model Context Protocol Server**](https://www.home-assistant.io/integrations/mcp_server/)
+integration, and reads and controls **what you have exposed to Assist** — that
+expose list, kept in Home Assistant, is the whole permission model. Connect a new
+device, expose it, tell the agent, and it is there.
+
+Anything it can do can also be put on a schedule — "boil the kettle every
+Friday morning" — which anyone in the chat can ask for, set up once with a
+confirmation, and pause or cancel later.
+
+## Layout
+
+NanoClaw stamps an agent from the parts of this folder its plugin reader loads
+(`skills/` and the `ai.nanoco.nanoclaw/` extension dir); README.md is not one of
+them.
+
+```
+home-assistant/
+├── plugin.json                       # Agent Plugins manifest (marks the folder as a plugin)
+├── ai.nanoco.nanoclaw/
+│   └── context/
+│       ├── instructions.md           # the agent's standing brief
+│       └── additional_context/
+│           ├── tasks.md              #   one yes at creation, `ncl tasks`, a self-contained prompt
+│           └── memory.md             #   which files live in `memory/`, flat beside index.md
+├── skills/
+│   ├── welcome/                      # first contact: intro, then run the onboarding
+│   │   └── SKILL.md
+│   └── homeassistant/                # the router + all mechanics
+│       ├── SKILL.md                  #   entry: capabilities → references, the tools, day-to-day control
+│       └── references/
+│           ├── connecting.md         #   the integration, the HTTPS URL, the token, every 401
+│           └── onboarding.md         #   probe first, then infer the house from the snapshot
+└── README.md                         # this file
+```
+
+No `mcp.json` (see below) and no predefined tasks — home control is
+request-driven. Schedules are created on request instead, against whatever that
+house actually has: the agent sets them up itself with `ncl tasks`, no admin
+approval involved.
+
+## Before you stamp
+
+Five prerequisites, all on your side. The agent walks you through them in chat,
+but nothing works until they are true.
+
+| # | Prerequisite | Where |
+|---|---|---|
+| 1 | Home Assistant **2025.2 or newer** | your instance |
+| 2 | The **Model Context Protocol Server** integration added, with the **Assist** API selected | Settings → Devices & services → Add integration → "Model Context Protocol Server" |
+| 3 | The entities you want it to see **exposed to Assist** | Settings → Voice assistants → Expose |
+| 4 | A **long-lived access token**, created by an **administrator** user | your HA profile → Security → Long-Lived Access Tokens → Create Token |
+| 5 | An **HTTPS** endpoint for HA, reachable from the container | see below |
+
+Nothing to install: the integration ships with Home Assistant core. Step 3 is
+where the agent's reach is actually decided — it can only read and control what
+is exposed, and nothing in the chat can widen that. Home Assistant exposes new
+lights, switches, covers, climate, fans, media players, scenes, scripts, vacuums
+and the common sensors by itself (the "Expose new entities" default), so a
+typical house is mostly visible on day one. **Locks are not auto-exposed** and
+stay invisible until you expose them on purpose. Multi-select on the Expose tab
+does the rest in one pass.
+
+### The URL has to be HTTPS
+
+NanoClaw only accepts plain `http://` for `localhost`, so
+`http://192.168.1.x:8123` will not stamp — a LAN address is neither localhost
+nor HTTPS, and it is rejected before the agent ever calls it. You need one of:
+
+- **Your own reverse proxy** — Caddy, nginx, or a Cloudflare Tunnel in front of
+  HA. Free, some setup.
+- **Home Assistant Cloud (Nabu Casa)** — the no-effort route. It is a **paid
+  subscription that you buy and hold yourself**; this template ships no account
+  and no key. Current plans and pricing:
+  <https://www.nabucasa.com/pricing/>. The plan is **Home Assistant Cloud**; it
+  gives you an `https://<id>.ui.nabu.casa` hostname, which is all the agent
+  needs.
+
+**HA on the same host is not a shortcut.** The URL check exempts `localhost`,
+`127.0.0.1` and `host.docker.internal` from the HTTPS rule, so
+`http://host.docker.internal:8123` stamps. It does not connect: the agent
+container's only route out is the OneCLI gateway, which sits on the agent's
+internal Docker network under the name `host.docker.internal` itself, so that
+address reaches the gateway, not your machine, and the dial fails before any
+header matters. A local HA needs an HTTPS hostname the gateway can resolve,
+same as a remote one.
+
+The endpoint the agent connects to is `https://<your-host>/api/mcp/assist` —
+the Assist API's own path, which Home Assistant serves whatever else the
+integration is configured with.
+
+## Stamp an agent from this template
+
+```bash
+ncl groups create --template lifestyle/home-assistant --name "Home"
+```
+
+Wire this group to its own messaging bot, separate from any other NanoClaw
+agent you run — a shared bot mixes this agent's house-control context and
+memory into another agent's chat history, and there is no way to unmix them
+afterwards.
+
+Then wire it to a chat as usual (`/manage-channels`) and say hi. The agent
+introduces itself, asks for the HTTPS URL, walks you through putting the token in
+the OneCLI vault, and only then calls `add_mcp_server` (which raises an **admin
+approval card** — approve it). **Then restart the group.** MCP servers only load
+at container start, so nothing connects until you do:
+
+```bash
+ncl groups restart --id <group-id> --message "connect home assistant"
+```
+
+New or newly exposed entities need no restart — the agent picks them up on its
+next read.
+
+**The vault entry has to exist before the server is wired**, and the agent is
+instructed to keep that order. Home Assistant's MCP server advertises OAuth
+metadata, so a first connect without the header does not just fail and retry: the
+client runs OAuth discovery, registers itself with an empty token, and
+permanently stops sending requests the gateway can inject into. Adding the secret
+afterwards does not fix it — recovery is an operator deleting the stale
+`mcpOAuth` entry from the group's `.claude-shared/.credentials.json` and
+restarting (see the connecting reference, section 6).
+
+## Why there is no `mcp.json`
+
+There is nothing to placeholder. The server's only per-user value is your
+Home Assistant address, and the agent asks for it in chat and wires the server
+itself during onboarding with `add_mcp_server`.
+
+## Credentials: via OneCLI, not env vars
+
+**No token lives in this template.** NanoClaw never passes secrets into agent
+containers as env vars, and `add_mcp_server` has no way to set a header anyway.
+The token goes into the OneCLI vault, matched on your HA hostname, and the
+gateway injects it into outbound calls at the proxy boundary:
+
+| Field | Value |
+|---|---|
+| API host | your HA hostname (the `<host>` in `https://<host>/api/mcp/assist`) |
+| Auth style | `Authorization: Bearer <token>` |
+| Scopes | none to pick — a long-lived access token carries the full permissions of the HA user it was created under |
+| Header | `Authorization` |
+| Value format | `Bearer {value}` |
+| Where to get it | Home Assistant profile (bottom-left avatar) → Security → Long-Lived Access Tokens → Create Token |
+
+The agent hands you a prefilled OneCLI link during onboarding. The host-side
+equivalent:
+
+```bash
+onecli secrets create --name "Home Assistant" --type generic \
+  --host-pattern <host> --header-name Authorization \
+  --value-format "Bearer {value}"
+```
+
+**Fallback, if the gateway does not inject.** Injection on HTTP-transport MCP
+calls is verified: the gateway MITMs both `http://` and `https://` and applies a
+matching vault entry to either. If calls still `401` with a correct vault entry,
+an operator can put the header on the server directly:
+
+```bash
+ncl groups config add-mcp-server --id <group-id> --name homeassistant \
+  --url https://<host>/api/mcp/assist \
+  --headers '{"Authorization":"Bearer <long-lived-token>"}'
+ncl groups restart --id <group-id> --message "reconnect Home Assistant"
+```
+
+## What the agent writes
+
+Nothing is shipped in the template; both of these are created by the agent at
+runtime, on the NanoClaw side:
+
+- **Scheduled tasks**, created with `ncl tasks` when someone in the chat asks
+  for one. They live in NanoClaw's task store like any other task.
+- **Memory notes** in the group's `memory/` directory, as flat files beside
+  `index.md` and linked from its Map, following NanoClaw's own memory system.
+  `additional_context/memory.md` tells the agent which files to keep and what
+  a line carries: standing schedules, household preferences, and device quirks.
+  Each file appears on its first write.
+
+It writes nothing into Home Assistant.
+
+## Security
+
+The agent only sees and controls what is exposed to Assist. That list lives in
+Home Assistant under Settings → Voice assistants → Expose, the MCP server
+enforces it, and nothing in the chat can widen it. Anyone who can message the
+chat can drive what is exposed, so the expose list is where the reach is
+decided.
+
+---
+
+Template by [Amit Yanay](https://github.com/CrAzyScreamx).
